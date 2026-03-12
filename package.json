@@ -1,0 +1,35 @@
+{
+	"name": "snitch",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.[js,jsx,ts,tsx]": [
+			"eslint",
+			"prettier --check"
+		],
+		"*.{json,yml,yaml,md}": [
+			"prettier --check"
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Jaizzer/snitch.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/Jaizzer/snitch/issues"
+	},
+	"homepage": "https://github.com/Jaizzer/snitch#readme",
+	"devDependencies": {
+		"husky": "^9.1.7",
+		"lint-staged": "^17.0.7"
+	}
+}
