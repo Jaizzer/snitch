@@ -35,11 +35,8 @@ jobs:
 
             - run: echo "Navigating to the backend directory..."
 
-            - name: Go to the backend directory
-              run: cd backend
-
-            - name: Install backend packages
-              run: npm ci
+            - name: Go to the backend directory and install packages
+              run: cd backend && npm ci
 
             - name: test
               run: npm run test
