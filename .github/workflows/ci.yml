@@ -30,4 +30,23 @@ jobs:
               working-directory: backend
               run: npm run test
 
+    test-frontend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v6
+
+            - name: Setup Node environment
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24.x"
+
+            - name: Install dependencies
+              working-directory: frontend
+              run: npm ci
+
+            - name: Perform test
+              working-directory: frontend
+              run: npm run test
+
 run-name: Deploy to ${{ github.head_ref || github.ref_name  }} by @${{ github.actor }}
