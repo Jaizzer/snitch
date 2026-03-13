@@ -14,8 +14,6 @@ jobs:
     test-backend:
         runs-on: ubuntu-latest
         steps:
-            - run: echo "Checking out repository..."
-
             - name: Checkout repository
               uses: actions/checkout@v6
 
