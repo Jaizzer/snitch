@@ -34,4 +34,4 @@ jobs:
       - run: echo "Performing tests..."
 
       - name: test
-        run: npm test
+        run: npm run test
