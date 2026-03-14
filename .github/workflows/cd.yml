@@ -1,4 +1,7 @@
 name: Vercel Preview Deployment
+env:
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
     push:
@@ -39,13 +42,17 @@ jobs:
               working-directory: backend
               run: npm ci
 
-            - name: Deploy to Vercel Action
-              uses: BetaHuhn/deploy-to-vercel-action@v1.10.0
-              with:
-                  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-                  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-                  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-                  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+            - name: Pull Vercel Environment Information
+              working-directory: backend
+              run: npx vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+            - name: Build Project Artifacts
+              working-directory: backend
+              run: npx vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+            - name: Deploy Project Artifacts to Vercel
+              working-directory: backend
+              run: npx vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
     deploy-preview-frontend:
         needs: changes
@@ -66,14 +73,14 @@ jobs:
 
             - name: Pull Vercel Environment Information
               working-directory: frontend
-              run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+              run: npx vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
             - name: Build Project Artifacts
               working-directory: frontend
-              run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+              run: npx vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
             - name: Deploy Project Artifacts to Vercel
               working-directory: frontend
-              run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+              run: npx vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
 run-name: Deploy to ${{ github.head_ref || github.ref_name  }} by @${{ github.actor }}
