@@ -1,8 +1,12 @@
 function App() {
 	return (
 		<>
-			<h1>Snitch</h1>
-			<p>Don't miss the next bus 🚌</p>
+			<div>
+				<h1 className='text-2xl/7 font-bold text-white sm:truncate sm:text-3xl sm:tracking-tight'>
+					Snitch
+				</h1>
+				<p>Don't miss the next bus 🚌</p>
+			</div>
 		</>
 	);
 }
