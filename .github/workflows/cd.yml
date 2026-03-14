@@ -72,10 +72,6 @@ jobs:
               working-directory: frontend
               run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-            - name: Build Project Artifacts
-              working-directory: frontend
-              run: npm run build
-
             - name: Deploy Project Artifacts to Vercel
               working-directory: frontend
               run: npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
