@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "jest --passWithNoTests",
-		"build": "tsc",
+		"build": "tsc --project tsconfig.build.json",
 		"start": "node dist/server.js",
 		"start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app/server.ts",
 		"start:prod": "nodemon dist/app/server.js",

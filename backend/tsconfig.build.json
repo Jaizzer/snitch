@@ -1,0 +1,5 @@
+// This configuration will be used by the `npm run build` to exclude the test files
+{
+	"extends": "./tsconfig.json",
+	"exclude": ["**/*.test.ts"]
+}
