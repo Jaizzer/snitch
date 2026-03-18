@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
 
 export function getUsers(req: Request, res: Response) {
-	res.send(200).json({ message: 'Users' });
+	res.status(200).send({ message: 'Users' });
 }
