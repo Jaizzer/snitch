@@ -1,0 +1,87 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Main Directory",
+			"type": "shell",
+			"icon": { "id": "device-desktop", "color": "terminal.ansiCyan" },
+			"isBackground": true,
+			"runOptions": { "runOn": "folderOpen" },
+			"command": "/bin/zsh -i", // <-- your shell here
+			"presentation": {
+				"echo": false, // silence "Executing task ..."
+				"focus": true,
+				"panel": "dedicated"
+			}
+		},
+
+		{
+			"label": "Frontend Directory", // Change this
+			"type": "shell",
+			"icon": { "id": "device-desktop", "color": "terminal.ansiBlue" },
+			"isBackground": true,
+			"runOptions": { "runOn": "folderOpen" },
+			"command": "cd frontend && /bin/zsh -il", // <-- your shell here
+			"presentation": {
+				"echo": false, // silence "Executing task ..."
+				"focus": true,
+				"panel": "dedicated",
+				"group": "directory"
+			}
+		},
+		{
+			"label": "Backend Directory",
+			"type": "shell",
+			"icon": { "id": "device-desktop", "color": "terminal.ansiGreen" },
+			"isBackground": true,
+			"runOptions": { "runOn": "folderOpen" },
+			"command": "cd backend && /bin/zsh -il", // <-- your shell here
+			"presentation": {
+				"echo": false, // silence "Executing task ..."
+				"focus": true,
+				"panel": "dedicated",
+				"group": "directory"
+			}
+		},
+		{
+			"label": "Frontend Server", // Change this
+			"type": "shell",
+			"icon": { "id": "server", "color": "terminal.ansiBlue" },
+			"isBackground": true,
+			"runOptions": { "runOn": "folderOpen" },
+			"command": "/bin/zsh -i -c 'cd frontend && npm run dev'", // <-- your shell here
+			"presentation": {
+				"echo": false, // silence "Executing task ..."
+				"focus": true,
+				"panel": "dedicated",
+				"group": "server"
+			}
+		},
+		{
+			"label": "Backend Server",
+			"type": "shell",
+			"icon": { "id": "server", "color": "terminal.ansiGreen" },
+			"isBackground": true,
+			"runOptions": { "runOn": "folderOpen" },
+			"command": "/bin/zsh -i -c 'cd backend && npm run start:dev'", // <-- your shell here
+			"presentation": {
+				"echo": false, // silence "Executing task ..."
+				"focus": true,
+				"panel": "dedicated",
+				"group": "server"
+			}
+		},
+
+		{
+			"label": "Open",
+			"dependsOn": [
+				"Main Directory",
+				"Frontend Directory",
+				"Backend Directory",
+				"Frontend Server",
+				"Backend Server"
+			], // Make sure these match your above task labels
+			"runOptions": { "runOn": "folderOpen" }
+		}
+	]
+}
