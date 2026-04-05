@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
 
-export function getUsers(req: Request, res: Response) {
-	res.status(200).send({ message: 'Users' });
+export function createUser(req: Request, res: Response) {
+	res.status(201).send({ message: 'Account created successfully!' });
 }

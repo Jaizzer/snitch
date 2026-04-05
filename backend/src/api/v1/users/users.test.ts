@@ -1,21 +1,16 @@
 import request from 'supertest';
-import express from 'express';
-import userRoutes from './users.route.ts';
+import app from '../../../app/app.ts';
+import { z } from 'zod';
 
-interface body {
-	message: string;
-}
+const ResponseBody = z.object({
+	message: z.string(),
+});
 
-// Setup app
-const app = express();
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use('/api/v1/users', userRoutes);
-
-describe('User Handler', () => {
-	it('GET /users should return the message "Users"', async () => {
-		const response = await request(app).get('/api/v1/users');
-		const body = response.body as body;
-		expect(body.message).toEqual('Users');
+describe('Users', () => {
+	it('POST /api/v1/users should return 201 and confirmation for valid input', async () => {
+		const response = await request(app).post('/api/v1/users');
+		const body = ResponseBody.parse(response.body);
+		expect(response.status).toBe(201);
+		expect(body.message).toBe('Account created successfully!');
 	});
 });
