@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "jest --passWithNoTests",
 		"build": "tsc --project tsconfig.build.json",
-		"start": "node dist/server.js",
+		"start": "node dist/app/server.js",
 		"start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app/server.ts",
 		"start:prod": "nodemon dist/app/server.js",
 		"pre-commit": "lint-staged"
@@ -49,6 +49,7 @@
 		"bcryptjs": "^3.0.3",
 		"cors": "^2.8.6",
 		"jsonwebtoken": "^9.0.3",
-		"pg": "^8.21.0"
+		"pg": "^8.21.0",
+		"zod": "^4.4.3"
 	}
 }
