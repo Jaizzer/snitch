@@ -44,7 +44,8 @@
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"rewriteRelativeImportExtensions": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true
 	},
 	"include": ["src/**/*", "**/*.test.ts"],
 	"exclude": ["node_modules"]
