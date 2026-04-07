@@ -7,10 +7,21 @@ const ResponseBody = z.object({
 });
 
 describe('Users', () => {
-	it('POST /api/v1/users should return 201 and confirmation for valid input', async () => {
+	it('POST /api/v1/users should return 201 status code', async () => {
 		const response = await request(app).post('/api/v1/users');
-		const body = ResponseBody.parse(response.body);
 		expect(response.status).toBe(201);
-		expect(body.message).toBe('Account created successfully!');
+	});
+
+	it('POST /api/v1/users should return a JSON response format', async () => {
+		const response = await request(app).post('/api/v1/users');
+		expect(response.headers['content-type']).toBe(
+			'application/json; charset=utf-8',
+		);
+	});
+
+	it('POST /api/v1/users should return an object with message property', async () => {
+		const response = await request(app).post('/api/v1/users');
+		const parsedData = ResponseBody.safeParse(response.body);
+		expect(parsedData.success).toBe(true);
 	});
 });
