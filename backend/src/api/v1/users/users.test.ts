@@ -105,4 +105,17 @@ describe('Users', () => {
 
 		expect(response.status).toBe(400);
 	});
+
+	it('POST /api/v1/users should return a 400 status for passwords with white spaces', async () => {
+		const userInformation = {
+			email: 'reznov@viktor.com',
+			password: 'PASSWORD pASSWORD1',
+		};
+
+		const response = await request(app)
+			.post('/api/v1/users')
+			.send(userInformation);
+
+		expect(response.status).toBe(400);
+	});
 });

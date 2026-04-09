@@ -11,27 +11,35 @@ export default function evaluatePassword(password: string): PasswordValidity {
 		};
 	}
 
-	const atleastOneDigitRegEx = /\d/;
-	if (!atleastOneDigitRegEx.exec(password)) {
+	const passwordHasNoDigit = !/\d/.exec(password);
+	if (passwordHasNoDigit) {
 		return {
 			isValid: false,
 			message: 'Password must include at least 1 digit',
 		};
 	}
 
-	const atleastOneUpperCaseRegEx = /(?=.*?[A-Z]).*/;
-	if (!atleastOneUpperCaseRegEx.exec(password)) {
+	const passwordHasNoUpperCase = !/(?=.*?[A-Z]).*/.exec(password);
+	if (passwordHasNoUpperCase) {
 		return {
 			isValid: false,
 			message: 'Password must include at least 1 upper case',
 		};
 	}
 
-	const atleastOneLowerCaseRegEx = /(?=.*?[a-z]).*/;
-	if (!atleastOneLowerCaseRegEx.exec(password)) {
+	const passwordHasNoLowerCase = !/(?=.*?[a-z]).*/.exec(password);
+	if (passwordHasNoLowerCase) {
 		return {
 			isValid: false,
 			message: 'Password must include at least 1 lower case',
+		};
+	}
+
+	const passwordHasWhiteSpace = /\s/.exec(password);
+	if (passwordHasWhiteSpace) {
+		return {
+			isValid: false,
+			message: 'Password must not contain any white spaces',
 		};
 	}
 
