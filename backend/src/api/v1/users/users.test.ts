@@ -53,4 +53,17 @@ describe('Users', () => {
 		const response = await request(app).post('/api/v1/users');
 		expect(response.status).toBe(400);
 	});
+
+	it('POST /api/v1/users should return a 400 status for passwords less than 8 characters', async () => {
+		const userInformation = {
+			email: 'reznov@viktor.com',
+			password: 'pass',
+		};
+
+		const response = await request(app)
+			.post('/api/v1/users')
+			.send(userInformation);
+
+		expect(response.status).toBe(400);
+	});
 });

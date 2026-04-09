@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import evaluatePassword from './users.util.ts';
 import { z } from 'zod';
 
 const UserInfoSchema = z.object({
@@ -7,9 +8,19 @@ const UserInfoSchema = z.object({
 });
 
 export function createUser(req: Request, res: Response) {
-	const userInfo = UserInfoSchema.safeParse(req.body);
-	if (!userInfo.success) {
-		res.status(400).json({ message: '' });
+	const parsingResult = UserInfoSchema.safeParse(req.body);
+	if (!parsingResult.success) {
+		return res.status(400).json({ message: 'Invalid request' });
 	}
-	res.status(201).json({ message: 'Account created successfully!' });
+
+	const { password } = parsingResult.data;
+	const passwordValidity = evaluatePassword(password);
+
+	if (!passwordValidity.isValid) {
+		return res.status(400).json({
+			message: passwordValidity.message,
+		});
+	}
+
+	return res.status(201).json({ message: 'Account created successfully!' });
 }
