@@ -27,6 +27,14 @@ export default function evaluatePassword(password: string): PasswordValidity {
 		};
 	}
 
+	const atleastOneLowerCaseRegEx = /(?=.*?[a-z]).*/;
+	if (!atleastOneLowerCaseRegEx.exec(password)) {
+		return {
+			isValid: false,
+			message: 'Password must include at least 1 lower case',
+		};
+	}
+
 	return {
 		isValid: true,
 	};
