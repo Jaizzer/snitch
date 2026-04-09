@@ -1,5 +1,5 @@
 node_modules
 .env*
 dist
-../src/data/generated/prisma
+src/data/prisma/generated
 .vercel
