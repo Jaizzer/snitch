@@ -43,6 +43,17 @@ export default function evaluatePassword(password: string): PasswordValidity {
 		};
 	}
 
+	const passwordHasNoSymbols = !/[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g.exec(
+		password,
+	);
+
+	if (passwordHasNoSymbols) {
+		return {
+			isValid: false,
+			message: 'Password must contain at least 1 symbol (e.g !, @, $, &)',
+		};
+	}
+
 	return {
 		isValid: true,
 	};

@@ -118,4 +118,17 @@ describe('Users', () => {
 
 		expect(response.status).toBe(400);
 	});
+
+	it('POST /api/v1/users should return a 400 status for passwords without any symbol', async () => {
+		const userInformation = {
+			email: 'reznov@viktor.com',
+			password: 'PASSWORDpASSWORD1',
+		};
+
+		const response = await request(app)
+			.post('/api/v1/users')
+			.send(userInformation);
+
+		expect(response.status).toBe(400);
+	});
 });
