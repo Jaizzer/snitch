@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../../app/app.ts';
+import app from '../../../routes.ts';
 import { z } from 'zod';
 
 const ResponseBody = z.object({
