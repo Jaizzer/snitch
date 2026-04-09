@@ -109,7 +109,7 @@ describe('Users', () => {
 	it('POST /api/v1/users should return a 400 status for passwords with white spaces', async () => {
 		const userInformation = {
 			email: 'reznov@viktor.com',
-			password: 'PASSWORD pASSWORD1',
+			password: ' PASSWORD pASSWO RD1',
 		};
 
 		const response = await request(app)
