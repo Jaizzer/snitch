@@ -16,6 +16,8 @@ export function createUser(req: Request, res: Response) {
 	const { password } = parsingResult.data;
 	const passwordValidity = evaluatePassword(password);
 
+	console.log(passwordValidity.message);
+
 	if (!passwordValidity.isValid) {
 		return res.status(400).json({
 			message: passwordValidity.message,

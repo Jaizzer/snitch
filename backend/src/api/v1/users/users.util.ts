@@ -19,6 +19,14 @@ export default function evaluatePassword(password: string): PasswordValidity {
 		};
 	}
 
+	const atleastOneUpperCaseRegEx = /(?=.*?[A-Z]).*/;
+	if (!atleastOneUpperCaseRegEx.exec(password)) {
+		return {
+			isValid: false,
+			message: 'Password must include at least 1 upper case',
+		};
+	}
+
 	return {
 		isValid: true,
 	};
