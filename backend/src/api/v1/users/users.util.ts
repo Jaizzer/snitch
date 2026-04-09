@@ -11,6 +11,14 @@ export default function evaluatePassword(password: string): PasswordValidity {
 		};
 	}
 
+	const atleastOneDigitRegEx = /\d/;
+	if (!atleastOneDigitRegEx.exec(password)) {
+		return {
+			isValid: false,
+			message: 'Password must include at least 1 digit',
+		};
+	}
+
 	return {
 		isValid: true,
 	};
