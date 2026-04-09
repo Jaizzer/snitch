@@ -16,6 +16,7 @@ describe('Users', () => {
 		const response = await request(app)
 			.post('/api/v1/users')
 			.send(userInformation);
+
 		expect(response.status).toBe(201);
 	});
 
@@ -43,7 +44,6 @@ describe('Users', () => {
 		const response = await request(app)
 			.post('/api/v1/users')
 			.send(userInformation);
-
 		const parsedData = ResponseBody.safeParse(response.body);
 
 		expect(parsedData.success).toBe(true);
@@ -51,6 +51,7 @@ describe('Users', () => {
 
 	it('POST /api/v1/users should return 400 status code for empty requests', async () => {
 		const response = await request(app).post('/api/v1/users');
+
 		expect(response.status).toBe(400);
 	});
 
