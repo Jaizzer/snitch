@@ -7,7 +7,7 @@ const ResponseBody = z.object({
 });
 
 describe('Users', () => {
-	describe('POST /api/v1/users', () => {
+	describe('POST', () => {
 		it('returns 201 status code for valid inputs', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
