@@ -1,4 +1,4 @@
-import app from './routes.ts';
+import app from './app.ts';
 import config from './config/env.ts';
 
 app.listen(config.port, () => {
