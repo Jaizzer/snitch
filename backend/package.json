@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "node --experimental-vm-modules ./node_modules/.bin/jest --passWithNoTests",
-		"build": "tsc --project tsconfig.build.json",
+		"build": "prisma generate --schema=./src/database/schema.prisma && tsc --project tsconfig.build.json",
 		"start": "node dist/app/server.js",
 		"start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app/server.ts",
 		"start:prod": "NODE_ENV=production nodemon dist/app/server.js",
