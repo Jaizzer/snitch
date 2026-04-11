@@ -1,12 +1,17 @@
 import request from 'supertest';
 import app from '../../../app.ts';
 import { z } from 'zod';
+import { prisma } from '../../../database/prismaClient.ts';
 
 const ResponseBody = z.object({
 	message: z.string(),
 });
 
 describe('Users', () => {
+	beforeEach(async () => {
+		await prisma.$transaction([prisma.user.deleteMany()]);
+	});
+
 	describe('POST', () => {
 		it('returns 201 status code for valid inputs', async () => {
 			const userInformation = {
@@ -127,6 +132,23 @@ describe('Users', () => {
 				password: 'PASSWORDpASSWORD1',
 			};
 
+			const response = await request(app)
+				.post('/api/v1/users')
+				.send(userInformation);
+
+			expect(response.status).toBe(400);
+		});
+
+		it('returns a 400 status if the provided email already exists', async () => {
+			const userInformation = {
+				email: 'rezno@gmail.com',
+				password: 'fazwim-ziptoe-1315asdzdalA',
+			};
+
+			// Create a user
+			await request(app).post('/api/v1/users').send(userInformation);
+
+			// Create another user with the same email
 			const response = await request(app)
 				.post('/api/v1/users')
 				.send(userInformation);
