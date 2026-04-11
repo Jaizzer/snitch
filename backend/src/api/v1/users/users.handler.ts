@@ -16,16 +16,16 @@ export async function createUser(req: Request, res: Response) {
 
 	const { password, email } = parsingResult.data;
 
+	const isEmailExisting = await service.getUserByEmail(email);
+	if (isEmailExisting) {
+		return res.status(400).json({ message: 'Email already exists' });
+	}
+
 	const passwordValidity = evaluatePassword(password);
 	if (!passwordValidity.isValid) {
 		return res.status(400).json({
 			message: passwordValidity.message,
 		});
-	}
-
-	const isEmailExisting = await service.getUserByEmail(email);
-	if (isEmailExisting) {
-		return res.status(400).json({ message: 'Email already exists' });
 	}
 
 	await service.createUser({ password, email });
