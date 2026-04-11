@@ -1,5 +1,5 @@
 import { UserInfoSchema } from '../../../lib/validators.ts';
-import service from './auth.service.ts';
+import service from './authentication.service.ts';
 import type { Request, Response } from 'express';
 
 export async function login(req: Request, res: Response) {

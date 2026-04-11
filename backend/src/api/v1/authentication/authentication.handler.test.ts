@@ -23,9 +23,11 @@ describe('Authentication', () => {
 		]);
 	});
 
-	describe('POST /api/v1/auth/login', () => {
+	describe('POST /api/v1/authentication/login', () => {
 		it('returns a JSON response format', async () => {
-			const response = await request(app).post('/api/v1/auth/login');
+			const response = await request(app).post(
+				'/api/v1/authentication/login',
+			);
 
 			expect(response.headers['content-type']).toBe(
 				'application/json; charset=utf-8',
@@ -33,14 +35,16 @@ describe('Authentication', () => {
 		});
 
 		it('returns a 401 status code if the request is empty', async () => {
-			const response = await request(app).post('/api/v1/auth/login');
+			const response = await request(app).post(
+				'/api/v1/authentication/login',
+			);
 
 			expect(response.status).toBe(401);
 		});
 
 		it('returns a 401 status code if the email is unregistered', async () => {
 			const response = await request(app)
-				.post('/api/v1/auth/login')
+				.post('/api/v1/authentication/login')
 				.send({
 					email: 'unregistered@gmail.com',
 					password: userInformation.password,
@@ -51,7 +55,7 @@ describe('Authentication', () => {
 
 		it('returns a 200 status code if the log in credentials are valid', async () => {
 			const response = await request(app)
-				.post('/api/v1/auth/login')
+				.post('/api/v1/authentication/login')
 				.send(userInformation);
 			expect(response.status).toBe(200);
 		});
