@@ -1,12 +1,7 @@
 import type { Request, Response } from 'express';
 import evaluatePassword from './users.util.ts';
-import { z } from 'zod';
 import service from './users.service.ts';
-
-const UserInfoSchema = z.object({
-	email: z.string(),
-	password: z.string(),
-});
+import { UserInfoSchema } from '../../../lib/validators.ts';
 
 export async function createUser(req: Request, res: Response) {
 	const parsingResult = UserInfoSchema.safeParse(req.body);
