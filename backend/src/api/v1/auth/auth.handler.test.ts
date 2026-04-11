@@ -24,13 +24,13 @@ describe('Authentication', () => {
 			);
 		});
 
-		it('returns a 401 status code for empty requests', async () => {
+		it('returns a 401 status code if the request is empty', async () => {
 			const response = await request(app).post('/api/v1/auth/login');
 
 			expect(response.status).toBe(401);
 		});
 
-		it('returns a 401 status code for unregistered emails', async () => {
+		it('returns a 401 status code if the email is unregistered', async () => {
 			const response = await request(app)
 				.post('/api/v1/auth/login')
 				.send({
@@ -39,6 +39,13 @@ describe('Authentication', () => {
 				});
 
 			expect(response.status).toBe(401);
+		});
+
+		it('returns a 200 status code if the log in credentials are valid', async () => {
+			const response = await request(app)
+				.post('/api/v1/auth/login')
+				.send(userInformation);
+			expect(response.status).toBe(200);
 		});
 	});
 });

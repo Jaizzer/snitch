@@ -10,7 +10,12 @@ export async function login(req: Request, res: Response) {
 
 	const { password, email } = parsingResult.data;
 
-	if (await service.isLoginCredentialsValid(password, email)) {
+	const isLogInCredentialsInvalid = !(await service.isLoginCredentialsValid({
+		password,
+		email,
+	}));
+
+	if (isLogInCredentialsInvalid) {
 		return res
 			.status(401)
 			.json({ message: 'Username/password combination error.' });

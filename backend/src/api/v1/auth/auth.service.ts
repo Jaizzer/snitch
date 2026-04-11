@@ -12,15 +12,21 @@ export function verifyToken(
 	return jwt.verify(token, jwtSecret);
 }
 
-async function isLoginCredentialsValid(email: string, password: string) {
+async function isLoginCredentialsValid({
+	email,
+	password,
+}: {
+	email: string;
+	password: string;
+}) {
 	const user = await prisma.user.findUnique({
 		where: { email },
 	});
 
-	const isEmailNonExistent = !user;
-	const isPasswordIncorrect = user?.password === password;
+	const isEmailExistent = user;
+	const isPasswordCorrect = user?.password === password;
 
-	return isEmailNonExistent || isPasswordIncorrect;
+	return isEmailExistent && isPasswordCorrect;
 }
 
 export default { isLoginCredentialsValid };

@@ -13,7 +13,7 @@ describe('Users', () => {
 	});
 
 	describe('POST api/v1/users', () => {
-		it('returns 201 status code for valid inputs', async () => {
+		it('returns 201 status code if the inputs are valid', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: 'nBEA~0>2/ar5',
@@ -41,7 +41,7 @@ describe('Users', () => {
 			);
 		});
 
-		it('returns an object with message property for valid inputs', async () => {
+		it('returns an object with message property if the inputs are valid', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: 'nBEA~0>2/ar5',
@@ -61,7 +61,7 @@ describe('Users', () => {
 			expect(response.status).toBe(400);
 		});
 
-		it('returns a 400 status for passwords less than 8 characters', async () => {
+		it('returns a 400 status if the password is less than 8 characters', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: 'pass',
@@ -74,7 +74,7 @@ describe('Users', () => {
 			expect(response.status).toBe(400);
 		});
 
-		it('returns a 400 status for passwords without any digit', async () => {
+		it('returns a 400 status if the password has no digit', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: 'passwordpassword',
@@ -87,7 +87,7 @@ describe('Users', () => {
 			expect(response.status).toBe(400);
 		});
 
-		it('returns a 400 status for passwords without any upper case', async () => {
+		it('returns a 400 status if the password has no upper case', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: 'passwordpassword1',
@@ -100,7 +100,7 @@ describe('Users', () => {
 			expect(response.status).toBe(400);
 		});
 
-		it('returns a 400 status for passwords without any lower case', async () => {
+		it('returns a 400 status if the passwords has no lower case', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: 'PASSWORDPASSWORD1',
@@ -113,7 +113,7 @@ describe('Users', () => {
 			expect(response.status).toBe(400);
 		});
 
-		it('returns a 400 status for passwords with white spaces', async () => {
+		it('returns a 400 status if the password has white spaces', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: ' PASSWORD pASSWO RD1',
@@ -126,7 +126,7 @@ describe('Users', () => {
 			expect(response.status).toBe(400);
 		});
 
-		it('returns a 400 status for passwords without any symbol', async () => {
+		it('returns a 400 status if the password has no symbol', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
 				password: 'PASSWORDpASSWORD1',
