@@ -1,6 +1,7 @@
 import request from 'supertest';
 import app from '../../../app.ts';
 import { prisma } from '../../../database/prismaClient.ts';
+import passwordManager from '../../../utils/passwordManager.ts';
 
 const userInformation = {
 	email: 'reznov@viktor.com',
@@ -11,7 +12,14 @@ describe('Authentication', () => {
 	beforeEach(async () => {
 		await prisma.$transaction([prisma.user.deleteMany()]);
 		await prisma.$transaction([
-			prisma.user.create({ data: userInformation }),
+			prisma.user.create({
+				data: {
+					email: userInformation.email,
+					password: await passwordManager.hash(
+						userInformation.password,
+					),
+				},
+			}),
 		]);
 	});
 

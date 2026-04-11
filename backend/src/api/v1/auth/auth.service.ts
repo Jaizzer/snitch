@@ -1,5 +1,6 @@
 import jwt, { type JwtPayload } from 'jsonwebtoken';
 import { prisma } from '../../../database/prismaClient.ts';
+import passwordManager from '../../../utils/passwordManager.ts';
 
 export function generateToken(payload: string, jwtSecret: string): string {
 	return jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
@@ -24,7 +25,15 @@ async function isLoginCredentialsValid({
 	});
 
 	const isEmailExistent = user;
-	const isPasswordCorrect = user?.password === password;
+
+	// Only check the password if the email exists in the database
+	let isPasswordCorrect = false;
+	if (isEmailExistent) {
+		isPasswordCorrect = await passwordManager.compare({
+			password: password,
+			hash: user.password,
+		});
+	}
 
 	return isEmailExistent && isPasswordCorrect;
 }
