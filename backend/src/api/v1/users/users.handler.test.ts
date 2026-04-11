@@ -12,7 +12,7 @@ describe('Users', () => {
 		await prisma.$transaction([prisma.user.deleteMany()]);
 	});
 
-	describe('POST', () => {
+	describe('POST api/v1/users', () => {
 		it('returns 201 status code for valid inputs', async () => {
 			const userInformation = {
 				email: 'reznov@viktor.com',
