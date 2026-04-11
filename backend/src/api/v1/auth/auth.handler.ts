@@ -1,4 +1,4 @@
-import { UserInfoSchema } from '../../../lib/validators';
+import { UserInfoSchema } from '../../../lib/validators.ts';
 import service from './auth.service.ts';
 import type { Request, Response } from 'express';
 
