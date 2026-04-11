@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import evaluatePassword from './users.util.ts';
 import service from './users.service.ts';
 import { UserInfoSchema } from '../../../lib/validators.ts';
+import passwordManager from '../../../utils/passwordManager.ts';
 
 export async function createUser(req: Request, res: Response) {
 	const parsingResult = UserInfoSchema.safeParse(req.body);
@@ -23,7 +24,9 @@ export async function createUser(req: Request, res: Response) {
 		});
 	}
 
-	await service.createUser({ password, email });
+	const hashedPassword = await passwordManager.hash(password);
+
+	await service.createUser({ password: hashedPassword, email });
 
 	return res.status(201).json({ message: 'Account created successfully!' });
 }
