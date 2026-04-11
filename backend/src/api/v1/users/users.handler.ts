@@ -26,7 +26,11 @@ export async function createUser(req: Request, res: Response) {
 
 	const hashedPassword = await passwordManager.hash(password);
 
-	await service.createUser({ password: hashedPassword, email });
+	const user = await service.createUser({ password: hashedPassword, email });
 
-	return res.status(201).json({ message: 'Account created successfully!' });
+	return res.status(201).json({ email: user.email, id: user.id });
+}
+
+export function getUser(req: Request, res: Response) {
+	return res.status(200).json({ message: 'user' });
 }

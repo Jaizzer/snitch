@@ -4,7 +4,8 @@ import { z } from 'zod';
 import { prisma } from '../../../database/prismaClient.ts';
 
 const ResponseBody = z.object({
-	message: z.string(),
+	id: z.number(),
+	email: z.string(),
 });
 
 describe('Users', () => {
