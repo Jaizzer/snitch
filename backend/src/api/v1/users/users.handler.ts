@@ -29,7 +29,7 @@ export async function createUser(req: Request, res: Response) {
 	const hashedPassword = await password.hash(submittedPassword);
 
 	const user = await service.createUser({
-		password: hashedPassword,
+		hashedPassword: hashedPassword,
 		email: submittedEmail,
 	});
 

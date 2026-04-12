@@ -2,7 +2,7 @@ import { prisma } from '../../../database/prismaClient.ts';
 
 interface UserRegistrationInfo {
 	email: string;
-	password: string;
+	hashedPassword: string;
 }
 
 async function createUser(userRegistrationInfo: UserRegistrationInfo) {

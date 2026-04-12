@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../../app.ts';
 import { prisma } from '../../../database/prismaClient.ts';
-import passwordManager from '../../../utils/password.ts';
+import password from '../../../utils/password.ts';
 import { z } from 'zod';
 
 const ResponseBody = z.object({
@@ -20,7 +20,7 @@ describe('Authentication', () => {
 			prisma.user.create({
 				data: {
 					email: userInformation.email,
-					password: await passwordManager.hash(
+					hashedPassword: await password.hash(
 						userInformation.password,
 					),
 				},
