@@ -2,6 +2,7 @@ import { UserInfoSchema } from '../../../lib/validators.ts';
 import type { Request, Response } from 'express';
 import getUserByEmail from '../../../services/getUserByEmail.ts';
 import passwordManager from '../../../utils/passwordManager.ts';
+import jwtManager from '../../../utils/jwtManager.ts';
 
 export async function login(req: Request, res: Response) {
 	const parsingResult = UserInfoSchema.safeParse(req.body);
@@ -30,5 +31,7 @@ export async function login(req: Request, res: Response) {
 			.json({ message: 'Username/password combination error.' });
 	}
 
-	return res.status(200).json({ message: 'Welcome back!' });
+	const token = jwtManager.generateAuthorizationToken({ id: user.id });
+
+	return res.status(200).json({ token });
 }

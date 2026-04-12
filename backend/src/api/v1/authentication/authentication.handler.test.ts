@@ -2,6 +2,11 @@ import request from 'supertest';
 import app from '../../../app.ts';
 import { prisma } from '../../../database/prismaClient.ts';
 import passwordManager from '../../../utils/passwordManager.ts';
+import { z } from 'zod';
+
+const ResponseBody = z.object({
+	token: z.string(),
+});
 
 const userInformation = {
 	email: 'reznov@viktor.com',
@@ -58,6 +63,16 @@ describe('Authentication', () => {
 				.post('/api/v1/authentication/login')
 				.send(userInformation);
 			expect(response.status).toBe(200);
+		});
+
+		it('returns a token if the log in credentials are valid', async () => {
+			const response = await request(app)
+				.post('/api/v1/authentication/login')
+				.send(userInformation);
+
+			const parsedData = ResponseBody.safeParse(response.body);
+
+			expect(parsedData.success).toBe(true);
 		});
 	});
 });
