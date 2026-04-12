@@ -3,6 +3,7 @@ import evaluatePassword from './users.util.ts';
 import service from './users.service.ts';
 import { UserInfoSchema } from '../../../lib/validators.ts';
 import passwordManager from '../../../utils/passwordManager.ts';
+import getUserByEmail from '../../../services/getUserByEmail.ts';
 
 export async function createUser(req: Request, res: Response) {
 	const parsingResult = UserInfoSchema.safeParse(req.body);
@@ -12,7 +13,7 @@ export async function createUser(req: Request, res: Response) {
 
 	const { password, email } = parsingResult.data;
 
-	const isEmailExisting = await service.getUserByEmail(email);
+	const isEmailExisting = await getUserByEmail(email);
 	if (isEmailExisting) {
 		return res.status(400).json({ message: 'Email already exists' });
 	}
