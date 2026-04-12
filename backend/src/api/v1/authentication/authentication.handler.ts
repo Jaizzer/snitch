@@ -1,6 +1,7 @@
 import { UserInfoSchema } from '../../../lib/validators.ts';
-import service from './authentication.service.ts';
 import type { Request, Response } from 'express';
+import getUserByEmail from '../../../services/getUserByEmail.ts';
+import passwordManager from '../../../utils/passwordManager.ts';
 
 export async function login(req: Request, res: Response) {
 	const parsingResult = UserInfoSchema.safeParse(req.body);
@@ -10,12 +11,20 @@ export async function login(req: Request, res: Response) {
 
 	const { password, email } = parsingResult.data;
 
-	const isLogInCredentialsInvalid = !(await service.isLoginCredentialsValid({
-		password,
-		email,
+	const user = await getUserByEmail(email);
+
+	if (!user) {
+		return res
+			.status(401)
+			.json({ message: 'Username/password combination error.' });
+	}
+
+	const isPasswordIncorrect = !(await passwordManager.compare({
+		password: password,
+		hash: user.password,
 	}));
 
-	if (isLogInCredentialsInvalid) {
+	if (isPasswordIncorrect) {
 		return res
 			.status(401)
 			.json({ message: 'Username/password combination error.' });
