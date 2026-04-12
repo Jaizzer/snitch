@@ -6,12 +6,12 @@ async function hash(password: string) {
 
 async function isMatched({
 	password,
-	hash,
+	hashedPassword,
 }: {
 	password: string;
-	hash: string;
+	hashedPassword: string;
 }) {
-	return await bcrypt.compare(password, hash);
+	return await bcrypt.compare(password, hashedPassword);
 }
 
 export default { hash, isMatched };

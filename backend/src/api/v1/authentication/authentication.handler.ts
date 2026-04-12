@@ -19,7 +19,7 @@ export async function login(req: Request, res: Response) {
 		!user ||
 		!(await password.isMatched({
 			password: submittedPassword,
-			hash: user.password,
+			hashedPassword: user.password,
 		}));
 
 	if (isLoginCredentialsInvalid) {
