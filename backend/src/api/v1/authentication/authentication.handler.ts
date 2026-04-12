@@ -1,7 +1,7 @@
 import { UserInfoSchema } from '../../../lib/validators.ts';
 import type { Request, Response } from 'express';
 import getUserByEmail from '../../../services/getUserByEmail.ts';
-import passwordManager from '../../../utils/password.ts';
+import password from '../../../utils/password.ts';
 import jwtManager from '../../../utils/jwtManager.ts';
 
 export async function login(req: Request, res: Response) {
@@ -10,14 +10,15 @@ export async function login(req: Request, res: Response) {
 		return res.status(401).json({ message: 'Invalid request' });
 	}
 
-	const { password, email } = parsingResult.data;
+	const submittedPassword = parsingResult.data.password;
+	const submittedEmail = parsingResult.data.email;
 
-	const user = await getUserByEmail(email);
+	const user = await getUserByEmail(submittedEmail);
 
 	const isLoginCredentialsInvalid =
 		!user ||
-		!(await passwordManager.isMatched({
-			password: password,
+		!(await password.isMatched({
+			password: submittedPassword,
 			hash: user.password,
 		}));
 

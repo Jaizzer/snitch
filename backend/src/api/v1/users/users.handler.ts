@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import evaluatePassword from './users.util.ts';
 import service from './users.service.ts';
 import { UserInfoSchema } from '../../../lib/validators.ts';
-import passwordManager from '../../../utils/password.ts';
+import password from '../../../utils/password.ts';
 import getUserByEmail from '../../../services/getUserByEmail.ts';
 
 export async function createUser(req: Request, res: Response) {
@@ -11,23 +11,27 @@ export async function createUser(req: Request, res: Response) {
 		return res.status(400).json({ message: 'Invalid request' });
 	}
 
-	const { password, email } = parsingResult.data;
+	const submittedPassword = parsingResult.data.password;
+	const submittedEmail = parsingResult.data.email;
 
-	const isEmailExisting = await getUserByEmail(email);
+	const isEmailExisting = await getUserByEmail(submittedEmail);
 	if (isEmailExisting) {
 		return res.status(400).json({ message: 'Email already exists' });
 	}
 
-	const passwordValidity = evaluatePassword(password);
+	const passwordValidity = evaluatePassword(submittedPassword);
 	if (!passwordValidity.isValid) {
 		return res.status(400).json({
 			message: passwordValidity.message,
 		});
 	}
 
-	const hashedPassword = await passwordManager.hash(password);
+	const hashedPassword = await password.hash(submittedPassword);
 
-	const user = await service.createUser({ password: hashedPassword, email });
+	const user = await service.createUser({
+		password: hashedPassword,
+		email: submittedEmail,
+	});
 
 	return res.status(201).json({ email: user.email, id: user.id });
 }
