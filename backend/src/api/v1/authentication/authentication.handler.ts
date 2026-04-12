@@ -16,7 +16,7 @@ export async function login(req: Request, res: Response) {
 
 	const isLoginCredentialsInvalid =
 		!user ||
-		!(await passwordManager.compare({
+		!(await passwordManager.isMatched({
 			password: password,
 			hash: user.password,
 		}));
