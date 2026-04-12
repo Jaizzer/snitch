@@ -14,18 +14,14 @@ export async function login(req: Request, res: Response) {
 
 	const user = await getUserByEmail(email);
 
-	if (!user) {
-		return res
-			.status(401)
-			.json({ message: 'Username/password combination error.' });
-	}
+	const isLoginCredentialsInvalid =
+		!user ||
+		!(await passwordManager.compare({
+			password: password,
+			hash: user.password,
+		}));
 
-	const isPasswordIncorrect = !(await passwordManager.compare({
-		password: password,
-		hash: user.password,
-	}));
-
-	if (isPasswordIncorrect) {
+	if (isLoginCredentialsInvalid) {
 		return res
 			.status(401)
 			.json({ message: 'Username/password combination error.' });
