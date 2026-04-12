@@ -3,7 +3,6 @@ import env from '../config/env.ts';
 
 interface Payload {
 	id: number;
-	email: string;
 }
 
 function generateAuthorizationToken(payload: Payload) {
