@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import evaluatePassword from './users.util.ts';
 import service from './users.service.ts';
 import { UserInfoSchema } from '../../../lib/validators.ts';
-import passwordManager from '../../../utils/passwordManager.ts';
+import passwordManager from '../../../utils/password.ts';
 import getUserByEmail from '../../../services/getUserByEmail.ts';
 
 export async function createUser(req: Request, res: Response) {

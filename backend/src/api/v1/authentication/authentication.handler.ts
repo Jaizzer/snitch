@@ -1,7 +1,7 @@
 import { UserInfoSchema } from '../../../lib/validators.ts';
 import type { Request, Response } from 'express';
 import getUserByEmail from '../../../services/getUserByEmail.ts';
-import passwordManager from '../../../utils/passwordManager.ts';
+import passwordManager from '../../../utils/password.ts';
 import jwtManager from '../../../utils/jwtManager.ts';
 
 export async function login(req: Request, res: Response) {

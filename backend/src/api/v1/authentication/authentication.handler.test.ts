@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../../app.ts';
 import { prisma } from '../../../database/prismaClient.ts';
-import passwordManager from '../../../utils/passwordManager.ts';
+import passwordManager from '../../../utils/password.ts';
 import { z } from 'zod';
 
 const ResponseBody = z.object({
