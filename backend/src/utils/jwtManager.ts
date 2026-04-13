@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import env from '../config/env.ts';
 
 interface Payload {
-	id: number;
+	id: string;
 }
 
 function generateAuthorizationToken(payload: Payload) {
@@ -10,8 +10,8 @@ function generateAuthorizationToken(payload: Payload) {
 	return token;
 }
 
-function decodeToken(token: string) {
+function decodeIdFromToken(token: string) {
 	return jwt.verify(token, env.jwtSecret);
 }
 
-export default { generateAuthorizationToken, decodeToken };
+export default { generateAuthorizationToken, decodeIdFromToken };
