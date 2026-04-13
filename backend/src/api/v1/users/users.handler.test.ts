@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { prisma } from '../../../database/prismaClient.ts';
 
 const ResponseBody = z.object({
-	id: z.number(),
+	id: z.string(),
 	email: z.string(),
 });
 
