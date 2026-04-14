@@ -1,6 +1,7 @@
 interface UserCredentials {
 	id: string;
 	email: string;
+	isUserVerified: boolean;
 }
 
 declare global {

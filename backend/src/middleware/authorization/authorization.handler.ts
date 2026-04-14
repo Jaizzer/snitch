@@ -27,6 +27,7 @@ export default async function authorize(
 		req.userCredentials = {
 			id: user.id,
 			email: user.email,
+			isUserVerified: user.isVerified,
 		};
 
 		next();
