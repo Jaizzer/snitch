@@ -17,4 +17,5 @@ model User {
     email          String  @unique
     name           String?
     hashedPassword String
+    isVerified     Boolean @default(false)
 }
