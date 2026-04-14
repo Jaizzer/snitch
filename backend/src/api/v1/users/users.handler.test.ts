@@ -161,4 +161,11 @@ describe('Users', () => {
 			expect(response.status).toBe(400);
 		});
 	});
+
+	describe('GET api/v1/users/:id', () => {
+		it('returns a 401 status if the user is not authorized', async () => {
+			const response = await request(app).get('/api/v1/users/1');
+			expect(response.status).toBe(401);
+		});
+	});
 });
