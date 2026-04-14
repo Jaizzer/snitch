@@ -4,7 +4,7 @@ import { prisma } from '../../../database/prismaClient.ts';
 import password from '../../../utils/password.ts';
 import { z } from 'zod';
 
-const ResponseBody = z.object({
+const ResponseBodySchema = z.object({
 	token: z.string(),
 });
 
@@ -70,7 +70,7 @@ describe('Authentication', () => {
 				.post('/api/v1/authentication/login')
 				.send(userInformation);
 
-			const parsedData = ResponseBody.safeParse(response.body);
+			const parsedData = ResponseBodySchema.safeParse(response.body);
 
 			expect(parsedData.success).toBe(true);
 		});
