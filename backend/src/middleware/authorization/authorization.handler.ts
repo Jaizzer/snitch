@@ -16,7 +16,7 @@ export default async function authorize(
 	}
 
 	try {
-		const id = jwtManager.decodeIdFromToken(token) as string;
+		const id = jwtManager.decodeIdFromToken(token);
 
 		const user = await getUserById(id);
 
@@ -30,7 +30,8 @@ export default async function authorize(
 		};
 
 		next();
-	} catch {
+	} catch (error) {
+		console.error(error);
 		res.status(401).json({ message: 'Invalid Token' });
 	}
 }
