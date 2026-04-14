@@ -8,6 +8,10 @@ const ResponseBody = z.object({
 	email: z.string(),
 });
 
+const LogInResponseBody = z.object({
+	token: z.string(),
+});
+
 describe('Users', () => {
 	beforeEach(async () => {
 		await prisma.$transaction([prisma.user.deleteMany()]);
@@ -166,6 +170,29 @@ describe('Users', () => {
 		it('returns a 401 status if the user is not authorized', async () => {
 			const response = await request(app).get('/api/v1/users/1');
 			expect(response.status).toBe(401);
+		});
+
+		it('returns a 200 status if the user is  authorized', async () => {
+			const userInformation = {
+				email: 'reznov@viktor.com',
+				password: 'nBEA~0>2/ar5',
+			};
+
+			// Register user
+			await request(app).post('/api/v1/users').send(userInformation);
+
+			// Obtain access token through login
+			const loginResponse = await request(app)
+				.post('/api/v1/authentication/login')
+				.send(userInformation);
+			const { token } = LogInResponseBody.parse(loginResponse.body);
+
+			// Visit protected route
+			const response = await request(app)
+				.get('/api/v1/users/1')
+				.set('Authorization', token);
+
+			expect(response.status).toBe(200);
 		});
 	});
 });
