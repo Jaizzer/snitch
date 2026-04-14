@@ -39,3 +39,7 @@ export async function createUser(req: Request, res: Response) {
 export function getUser(req: Request, res: Response) {
 	return res.status(200).json({ message: 'user' });
 }
+
+export function updateUser(req: Request, res: Response) {
+	return res.status(204).json({ message: 'User updated successfully' });
+}

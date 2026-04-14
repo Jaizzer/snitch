@@ -195,4 +195,12 @@ describe('Users', () => {
 			expect(response.status).toBe(200);
 		});
 	});
+
+	describe('PUT api/v1/users/:id', () => {
+		it('returns a 401 status if the user is not authorized', async () => {
+			const response = await request(app).put(`/api/v1/users/13`);
+
+			expect(response.status).toBe(401);
+		});
+	});
 });
