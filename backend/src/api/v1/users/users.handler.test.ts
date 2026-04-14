@@ -197,10 +197,46 @@ describe('Users', () => {
 	});
 
 	describe('PUT api/v1/users/:id', () => {
+		let token: string;
+		let id: string;
+		beforeEach(async () => {
+			const userInformation = {
+				email: 'reznov@viktor.com',
+				password: 'nBEA~0>2/ar5',
+			};
+
+			// Register user
+			const registrationResponse = await request(app)
+				.post('/api/v1/users')
+				.send(userInformation);
+			id = ResponseBody.parse(registrationResponse.body).id;
+
+			// Obtain access token through login
+			const loginResponse = await request(app)
+				.post('/api/v1/authentication/login')
+				.send(userInformation);
+
+			token = LogInResponseBody.parse(loginResponse.body).token;
+		});
+
 		it('returns a 401 status if the user is not authorized', async () => {
 			const response = await request(app).put(`/api/v1/users/13`);
 
 			expect(response.status).toBe(401);
+		});
+
+		it('returns a 403 status if a verified user is attempting to modify a different user', async () => {
+			// Visit protected route
+			const response = await request(app)
+				.put('/api/v1/users/1')
+				.set('Authorization', token)
+				.send({
+					credentials: {
+						id,
+					},
+				});
+
+			expect(response.status).toBe(403);
 		});
 	});
 });

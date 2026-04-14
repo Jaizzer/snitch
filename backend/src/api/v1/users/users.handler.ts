@@ -41,5 +41,17 @@ export function getUser(req: Request, res: Response) {
 }
 
 export function updateUser(req: Request, res: Response) {
-	return res.status(204).json({ message: 'User updated successfully' });
+	if (!req.userCredentials) {
+		return res.send(401).json({ message: 'Invalid credentials' });
+	}
+
+	const isUserUpdatingAnotherUser = req.userCredentials.id !== req.params.id;
+
+	if (isUserUpdatingAnotherUser) {
+		return res
+			.status(403)
+			.json({ message: 'Not allowed to update other user' });
+	}
+
+	return res.status(204).json({ message: 'user' });
 }
