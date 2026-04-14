@@ -6,13 +6,13 @@ import password from '../../../utils/password.ts';
 import getUserByEmail from '../../../services/getUserByEmail.ts';
 
 export async function createUser(req: Request, res: Response) {
-	const parsingResult = UserInfoSchema.safeParse(req.body);
-	if (!parsingResult.success) {
+	const parsedUserInfo = UserInfoSchema.safeParse(req.body);
+	if (!parsedUserInfo.success) {
 		return res.status(400).json({ message: 'Invalid request' });
 	}
 
-	const submittedPassword = parsingResult.data.password;
-	const submittedEmail = parsingResult.data.email;
+	const submittedPassword = parsedUserInfo.data.password;
+	const submittedEmail = parsedUserInfo.data.email;
 
 	const isEmailExisting = await getUserByEmail(submittedEmail);
 	if (isEmailExisting) {
