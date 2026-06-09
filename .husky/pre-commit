@@ -1,0 +1,34 @@
+#!/bin/bash
+IS_FRONTEND_MODIFIED=false
+IS_BACKEND_MODIFIED=false
+
+# Determine whether the frontend and backend directory where modified
+STAGED_FILES=( $(git diff --name-only --cached) )
+for i in "${STAGED_FILES[@]}"
+do
+    if [[ $i == *"frontend/"* ]] && [ "$IS_FRONTEND_MODIFIED" == false ]
+    then
+        IS_FRONTEND_MODIFIED=true
+    fi
+
+    if [[ $i == *"backend/"* ]] && [ "$IS_BACKEND_MODIFIED" == false ]
+    then
+        IS_BACKEND_MODIFIED=true
+    fi
+done
+
+
+
+if [ "$IS_FRONTEND_MODIFIED" == true ] ; then
+    echo "Checking frontend directory..."
+    cd frontend && npm run pre-commit
+    cd ../
+fi
+
+if [ "$IS_BACKEND_MODIFIED" == true ] ; then
+    echo "Checking backend directory..."
+    cd backend && npm run pre-commit
+    cd ../
+fi
+
+
