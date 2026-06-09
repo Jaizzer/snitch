@@ -21,13 +21,17 @@ done
 
 if [ "$IS_FRONTEND_MODIFIED" == true ] ; then
     echo "Checking frontend directory..."
-    cd frontend && npm run pre-commit
+    cd frontend 
+    npm test
+    npm run pre-commit
     cd ../
 fi
 
 if [ "$IS_BACKEND_MODIFIED" == true ] ; then
     echo "Checking backend directory..."
-    cd backend && npm run pre-commit
+    cd backend
+    npm test
+    npm run pre-commit
     cd ../
 fi
 
