@@ -12,6 +12,9 @@ on:
 
 jobs:
     test-backend:
+        defaults:
+            run:
+                working-directory: ./backend
         runs-on: ubuntu-latest
         steps:
             - run: echo "Checking out repository..."
@@ -19,26 +22,15 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v6
 
-            - run: echo "Setting up Node environment..."
-
-            - name: Use Node.js
+            - name: Setup Node environment
               uses: actions/setup-node@v4
               with:
                   node-version: "24.x"
 
-            - run: echo "Installing dependencies..."
-
             - name: Install dependencies
               run: npm ci
 
-            - run: echo "Performing tests..."
-
-            - run: echo "Navigating to the backend directory..."
-
-            - name: Go to the backend directory and install packages
-              run: cd backend && npm ci
-
-            - name: test
-              run: cd backend && npm run test
+            - name: Perform test
+              run: npm run test
 
 run-name: Deploy to ${{ github.head_ref || github.ref_name  }} by @${{ github.actor }}
