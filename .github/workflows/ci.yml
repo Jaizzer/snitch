@@ -38,6 +38,9 @@ jobs:
             - name: Go to the backend directory
               run: cd backend
 
+            - name: Install backend packages
+              run: npm ci
+
             - name: test
               run: npm run test
 
