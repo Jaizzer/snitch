@@ -1,37 +1,52 @@
 name: Continuous Integration
-run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+
 on:
-  push: 
-    branches: 
-      - '**'
-      - '!main'
-  pull_request: 
-    branches: 
-      - '**'
-      - '!main'
+    push:
+        branches:
+            - "**"
+            - "!main"
+    pull_request:
+        branches:
+            - "**"
+            - "!main"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Checking out repository..."
+    test-backend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v6
 
-      - name: Checkout repository
-        uses: actions/checkout@v6
+            - name: Setup Node environment
+              uses: actions/setup-node@v6
+              with:
+                  node-version: "24.x"
 
-      - run: echo "Setting up Node environment..."
+            - name: Install dependencies
+              working-directory: backend
+              run: npm ci
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-            node-version: '24.x'
+            - name: Perform test
+              working-directory: backend
+              run: npm run test
 
-      - run: echo "Installing dependencies..."
+    test-frontend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v6
 
-      - name: Install dependencies
-        run: npm ci
-    
-      - run: echo "Performing tests..."
+            - name: Setup Node environment
+              uses: actions/setup-node@v6
+              with:
+                  node-version: "24.x"
 
-      - name: test
-        run: npx jest --passWithNoTests
+            - name: Install dependencies
+              working-directory: frontend
+              run: npm ci
+
+            - name: Perform test
+              working-directory: frontend
+              run: npm run test
+
+run-name: Deploy to ${{ github.head_ref || github.ref_name  }} by @${{ github.actor }}
